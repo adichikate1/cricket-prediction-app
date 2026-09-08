@@ -1,0 +1,37 @@
+{
+  "numeric": [
+    "team1_win_rate",
+    "team2_win_rate",
+    "head_to_head_win_rate",
+    "team1_recent_form",
+    "team2_recent_form",
+    "team1_venue_win_rate",
+    "team2_venue_win_rate",
+    "team1_avg_runs_last_5",
+    "team2_avg_runs_last_5",
+    "team1_avg_wicket_last_5",
+    "team2_avg_wicket_last_5",
+    "avg_first_innings_score",
+    "chasing_success_rate",
+    "temperature",
+    "humidity",
+    "rain_probability",
+    "diff_win_rate",
+    "diff_recent_form",
+    "diff_venue_win_rate",
+    "diff_avg_runs_last_5",
+    "diff_avg_wicket_last_5",
+    "weather_rain_x_humidity",
+    "toss_winner_is_team1",
+    "toss_decision_bat"
+  ],
+  "categorical": [
+    "team1",
+    "team2",
+    "venue",
+    "pitch_type",
+    "toss_winner",
+    "toss_decision"
+  ],
+  "mode": "after_toss"
+}
