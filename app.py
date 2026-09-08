@@ -53,6 +53,7 @@ with st.expander("🔴 Fetch live stats from CREX (experimental)"):
             # pre-fill the stat widgets directly via their keys
             key_map = {
                 "t1_wr": "team1_win_rate", "t2_wr": "team2_win_rate",
+                "t1_venue": "team1_venue_win_rate", "t2_venue": "team2_venue_win_rate",
                 "t1_form": "team1_recent_form", "t2_form": "team2_recent_form",
                 "t1_runs": "team1_avg_runs_last_5", "t2_runs": "team2_avg_runs_last_5",
                 "t1_wkts": "team1_avg_wicket_last_5", "t2_wkts": "team2_avg_wicket_last_5",
