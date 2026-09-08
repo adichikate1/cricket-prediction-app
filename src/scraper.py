@@ -833,8 +833,12 @@ def scrape_match(match_url, league_df):
     team1, team2 = team_names[0], team_names[2]
 
     win_rates = find_win_rate(script)
+    # find_win_rate() returns [team1_win_rate, team2_win_rate, team1_venue_win_rate,
+    # team2_venue_win_rate] - all 4 in one list, not just the first 2.
     team1_win_rate = win_rates[0] if len(win_rates) > 0 else league_df["team1_win_rate"].mean()
     team2_win_rate = win_rates[1] if len(win_rates) > 1 else league_df["team2_win_rate"].mean()
+    team1_venue_win_rate = win_rates[2] if len(win_rates) > 2 else league_df["team1_venue_win_rate"].mean()
+    team2_venue_win_rate = win_rates[3] if len(win_rates) > 3 else league_df["team2_venue_win_rate"].mean()
 
     h2h = h2h_win_rate(script, team_names)
 
@@ -863,6 +867,7 @@ def scrape_match(match_url, league_df):
     return {
         "team1": team1, "team2": team2, "venue": venue_name, "pitch_type": p_type,
         "team1_win_rate": team1_win_rate, "team2_win_rate": team2_win_rate,
+        "team1_venue_win_rate": team1_venue_win_rate, "team2_venue_win_rate": team2_venue_win_rate,
         "head_to_head_win_rate": h2h,
         "team1_recent_form": team1_recent_form, "team2_recent_form": team2_recent_form,
         "team1_avg_runs_last_5": t1_avg_runs, "team2_avg_runs_last_5": t2_avg_runs,
@@ -877,14 +882,12 @@ def scrape_match(match_url, league_df):
 def scrape_completed_match(match_url, league_df):
     script, soup, _ = _get_script_and_soup(match_url)
     stats = scrape_match(match_url, league_df)
+    # stats already has team1_venue_win_rate / team2_venue_win_rate scraped
+    # straight from the site (via find_win_rate()'s 3rd/4th values) - no
+    # need to override with a historical lookup anymore.
 
     team_names = find_team_name(script)
     result = win(script, team_names)
-
-    t1 = league_df[(league_df["team1"] == stats["team1"])]["team1_venue_win_rate"]
-    t2 = league_df[(league_df["team2"] == stats["team2"])]["team2_venue_win_rate"]
-    stats["team1_venue_win_rate"] = float(t1.mean()) if len(t1) else float(league_df["team1_venue_win_rate"].mean())
-    stats["team2_venue_win_rate"] = float(t2.mean()) if len(t2) else float(league_df["team2_venue_win_rate"].mean())
     stats["win"] = result
 
     return stats
